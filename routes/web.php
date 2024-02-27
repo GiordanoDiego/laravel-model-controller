@@ -2,43 +2,22 @@
 
 use Illuminate\Support\Facades\Route;
 
+// controller importazioni
+use App\Http\Controllers\Guest\PageController;
+use App\Http\Controllers\Guest\MovieController;
+
+//non sono percorsi ma nameSpace-> percorsi concettuali
 
 
-Route::get('/', function () {
-    $firstName = 'Gino';
-    $lastName = 'Paoli';
 
-    /*
-        compact: crea un array associativo le cui chiavi sono le stringhe
-                 che mettiamo tra le parentesi, mentre i valori di tali
-                 chiavi sono i valori delle variabili con i nomi corrispondenti
-                 alle stringhe inserite
+// Route::get('/', [PageController::class, 'index'])->name('home');
 
-        compact('firstName', 'lastName')
-         |                                     |
-         V                                     V
+Route::get('/chi-siamo', [PageController::class, 'about'])->name('about');
 
-         [
-            'firstName' => $firstName,
-            'lastName' => $lastName,
-         ]
-    */
+Route::get('/', [MovieController::class, 'index'])->name('movies.index');
 
-    /*
-        dd: vuol dire dump and die, cioè fai il var_dump (più carino però)
-            e poi stoppa l'esecuzione
-    */
-    // dd(compact('firstName', 'lastName'));
+//definisco una rotta parametrica che cambia l'url
+Route::get('/movies{id}', [MovieController::class, 'show'])->name('movies.show');
 
-    return view('welcome', [
-        'firstName' => $firstName,
-        'lastName' => $lastName,
-    ]);
-    // return view('welcome', compact('firstName', 'lastName'));
-});
-
-Route::get('/chi-siamo', function () {
-    return view('subpages.about');
-});
 
 // Route::get(PERCORSO CON CUI ARRIVARE ALLA PAGINA, FUNZIONE DI CALLBACK CHE MI CREA LA RISPOSTA DA DARE ALL UTENTE)
